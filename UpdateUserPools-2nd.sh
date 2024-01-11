@@ -24,11 +24,13 @@ admin_config_validity_days=$(jq -r '.AdminCreateUserConfig.UnusedAccountValidity
 invite_sms_message=$(jq -r '.AdminCreateUserConfig.InviteMessageTemplate.SMSMessage' userpool-config.json)
 invite_email_message=$(jq -r '.AdminCreateUserConfig.InviteMessageTemplate.EmailMessage' userpool-config.json)
 invite_email_subject=$(jq -r '.AdminCreateUserConfig.InviteMessageTemplate.EmailSubject' userpool-config.json)
+# mfa
+mfa_config_enabled=$(jq -r '.MfaConfiguration' userpool-config.json)
+device_config_challenge=$(jq -r '.DeviceConfiguration.ChallengeRequiredOnNewDevice' userpool-config.json)
+device_config_user_prompt=$(jq -r '.DeviceConfiguration.DeviceOnlyRememberedOnUserPrompt' userpool-config.json)
 
 for id in $USER_POOL_IDS
 do
-  echo "Updating parameters for User Pool: $id" | tee -a UpdateUserPools.log
-
   aws cognito-idp update-user-pool \
     --user-pool-id "$id" \
     --sms-authentication-message "$sms_authentication_message" \
@@ -48,16 +50,21 @@ do
     }" \
     --admin-create-user-config "{
         \"AllowAdminCreateUserOnly\":$admin_config_allow_admin_create,
-        \"UnusedAccountValidityDays\":$admin_config_validity_days,
         \"InviteMessageTemplate\":{
             \"SMSMessage\":\"$invite_sms_message\",
             \"EmailMessage\":\"$invite_email_message\",
             \"EmailSubject\":\"$invite_email_subject\"
         }
+    }" \
+    --mfa-configuration "$mfa_config_enabled" \
+    --device-configuration "{
+        \"ChallengeRequiredOnNewDevice\":$device_config_challenge,
+        \"DeviceOnlyRememberedOnUserPrompt\":$device_config_user_prompt
     }"
 
   echo "Parameters updated for User Pool: $id" | tee -a UpdateUserPools.log
-  sleep 1 # Prevent API throttling
+
+  sleep 0.1
 done
 
-printf "Done.\nParameters have been updated for $USER_POOL_IDS_COUNT User Pools.\n" | tee -a UpdateUserPools.log
+echo "Done.\nParameters have been updated for $USER_POOL_IDS_COUNT User Pools.\n" | tee -a UpdateUserPools.log

@@ -17,12 +17,12 @@ parse_output
 while [ "$NEXT_TOKEN" != "null" ]; do
   if [ "$NEXT_TOKEN" == "null" ] || [ -z "$NEXT_TOKEN" ] ; then
     echo "Command: $AWS_COMMAND "
-    sleep 3
+    sleep 1
     cli_output=$($AWS_COMMAND)
     parse_output
   else
     echo "Next page: $AWS_COMMAND --next-token $NEXT_TOKEN"
-    sleep 3
+    sleep 1
     cli_output=$($AWS_COMMAND --next-token $NEXT_TOKEN)
     parse_output
   fi

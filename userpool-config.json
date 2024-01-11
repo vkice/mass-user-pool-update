@@ -1,21 +1,26 @@
 {
-    "SmsVerificationMessage":"Your authentication code is {####}",
-    "EmailVerificationMessage":"You have requested to reset your password. Your authentication code is {####}",
-    "EmailVerificationSubject":"Password Reset",
-    "VerificationMessageTemplate":{
-       "SmsMessage":"Your authentication code is {####}",
-       "EmailMessage":"You have requested to reset your password. Your authentication code is {####}",
-       "EmailSubject":"Password Reset",
-       "DefaultEmailOption":"CONFIRM_WITH_CODE"
+   "example": "Example use only, for testing purposes omit --email-configuration and --sms-configuration from script 2 L40-47 otherwise additional setup required",
+   "SmsVerificationMessage":"Your authentication code is {####}",
+   "EmailVerificationMessage":"You have requested to reset your password. Your authentication code is {####}",
+   "EmailVerificationSubject":"Password Reset",
+   "VerificationMessageTemplate":{
+      "SmsMessage":"Your authentication code is {####}",
+      "EmailMessage":"You have requested to reset your password. Your authentication code is {####}",
+      "EmailSubject":"Password Reset",
+      "DefaultEmailOption":"CONFIRM_WITH_CODE"
+   },
+   "SmsAuthenticationMessage":"Your authentication code is {####}",
+   "AdminCreateUserConfig":{
+      "AllowAdminCreateUserOnly":false,
+      "InviteMessageTemplate":{
+         "SMSMessage":"Your username is {username} and your temporary password is {####}.",
+         "EmailMessage":"Your new account has been created. Your username is {username} and your temporary password is {####}",
+         "EmailSubject":"Your Account"
+        }
     },
-    "SmsAuthenticationMessage":"Your authentication code is {####}",
-    "AdminCreateUserConfig":{
-       "AllowAdminCreateUserOnly":false,
-       "UnusedAccountValidityDays":7,
-       "InviteMessageTemplate":{
-          "SMSMessage":"Your username is {username} and your temporary password is {####}.",
-          "EmailMessage":"Your new account has been created. Your username is {username} and your temporary password is {####}",
-          "EmailSubject":"Your Account"
-         }
-     }
- }
+    "MfaConfiguration": "OPTIONAL",
+    "DeviceConfiguration": {
+     "ChallengeRequiredOnNewDevice":true,
+     "DeviceOnlyRememberedOnUserPrompt":true
+   }
+}

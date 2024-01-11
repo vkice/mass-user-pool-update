@@ -27,4 +27,6 @@ Included within this repository are several key components:
 3. **Deploy**: Run `QueryUserPoolsPagination-1st.sh` to retrieve the list of user pools.
 4. **Update**: Execute `UpdateUserPools-2nd.sh` with the desired configuration JSON to update your user pools.
 
+Note for testing purposes: Omit `--email-configuration` and `--sms-configuration` from script 2 L40-47 otherwise additional setup required for AWS SES
+
 Feel free to utilize and modify these scripts as needed for your specific use case.
